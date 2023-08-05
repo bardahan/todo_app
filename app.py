@@ -1,5 +1,4 @@
 import socket
-import sqlite3
 import secrets
 import psycopg2
 
@@ -28,7 +27,6 @@ def currentTime():
 
 @app.route("/")
 def index():
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute("select * from todos")
     todos = cursor.fetchall()
@@ -37,7 +35,6 @@ def index():
 
 @app.route("/add/<todo>")
 def add(todo):
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute("insert into todos(todo,date,time) values(%s, %s, %s)", (todo, currentDate(), currentTime()))
     connection.commit()
@@ -46,7 +43,6 @@ def add(todo):
 
 @app.route("/check/<int:id>")
 def check(id):
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute(f"update todos set status = 'True' where id = {id}")
     cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
@@ -57,7 +53,6 @@ def check(id):
 
 @app.route("/uncheck/<int:id>")
 def uncheck(id):
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute(f"update todos set status = 'False' where id = {id}")
     connection.commit()
@@ -66,7 +61,6 @@ def uncheck(id):
 
 @app.route("/edit/<int:id>/<todo>")
 def edit(id, todo):
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute(f"update todos set todo = '{todo}' where id = {id}")
     connection.commit()
@@ -75,7 +69,6 @@ def edit(id, todo):
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    # connection = sqlite3.connect("todos.db")
     cursor = connection.cursor()
     cursor.execute(f"delete from todos where id = {id}")
     cursor.execute(f"select setval('todos_id_seq',(select max(id) from todos))")
