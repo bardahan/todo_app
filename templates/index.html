@@ -13,10 +13,10 @@
   <p class="todoID">{{todo[0]}}</p>
   <div class="notCompletedToDos">
     <div>
-      <a href="/check/{{todo[0]}}" class="todoStatus">🔲</a>
+      <div class="todoStatus" onclick="checkToDo({{todo[0]}})">🔲</div>
     </div>
-    <input type="text" value="{{todo[1]}}" class="todoContent" />
-    <button class="btnSave" type="submit" onclick="editToDo()" title="save">
+    <input type="text" value="{{todo[1]}}" id="{{todo[0]}}" class="todoContent" />
+    <button class="btnSave" onclick="editToDo({{todo[0]}})" title="save">
       💾
     </button>
     <p class="date">
@@ -24,24 +24,23 @@
       {{todo[2]}}
     </p>
     <div class="delete">
-      <a href="/delete/{{todo[0]}}" class="todoStatus">🗑️</a>
+      <div class="todoStatus" onclick="deleteToDo({{todo[0]}})">🗑️</div>
     </div>
   </div>
   {% endif %}{% endfor %} {% for todo in todos %} {% if todo[4] == "True" %}
   <div class="completedToDos">
     <div>
-      <a href="/uncheck/{{todo[0]}}" class="todoStatus">✅</a>
+      <div onclick="uncheckToDo({{todo[0]}})" class="todoStatus">✅</div>
     </div>
     <input type="text" value="{{todo[1]}}" class="todoContent" />
-    <button class="btnSave" type="submit" onclick="editToDo()" title="save">
-      💾
-    </button>
+    <div class="btnSave" onclick="editToDo({{todo[0]}})" title="save">
+    </div>
     <p class="date">
       {{todo[6]}} <br />
       {{todo[5]}}
     </p>
     <div class="delete">
-      <a href="/delete/{{todo[0]}}" class="todoStatus">🗑️</a>
+      <div class="todoStatus" onclick="deleteToDo({{todo[0]}})">🗑️</div>
     </div>
   </div>
   {% endif %} {% endfor %}
