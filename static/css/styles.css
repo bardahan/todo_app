@@ -1,0 +1,166 @@
+html {
+    font-size: 175%;
+}
+
+* {
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: #333745;
+    user-select: none;
+    text-align: center;
+    transition: 0.2s;
+}
+
+body::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: #333745;
+}
+
+body::-webkit-scrollbar-track,
+body::-webkit-scrollbar-button {
+    background: transparent;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    text-align: left;
+}
+
+h6 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.container {
+    display: block;
+    margin: 2rem auto 0 auto;
+    width: 80%;
+}
+
+.btnAdd {
+    padding: 0.3rem;
+    font-size: 1rem;
+    background-color: #C8F6EA;
+    border-radius: 0.25rem;
+    border: 0;
+    cursor: pointer;
+    margin: 1rem 0 0 1.5rem;
+}
+
+.btnAdd:hover {
+    background-color: #B9F3E4;
+}
+
+.btnAdd:focus {
+    box-shadow: #C8F6EA;
+}
+
+.inputToDo {
+    border: 1px solid #C8F6EA;
+    border-radius: 0.25rem;
+    height: 2rem;
+    width: 80%;
+    padding: 0.25rem;
+    font-size: 1rem;
+    transition: 0s;
+}
+
+.inputToDo:focus {
+    outline: 2px solid #C8F6EA;
+}
+
+.notCompletedToDos, .completedToDos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoContent {
+    width: 60%;
+    user-select: text;
+    border: 0;
+    cursor: default;
+    background-color: transparent;
+}
+
+.todoContent:focus {
+    outline: none;
+}
+
+.todoID {
+    display: none;
+}
+
+.notCompletedToDos *, .completedToDos * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notCompletedToDos, .completedToDos {
+    padding: 0.5rem;
+}
+
+.completedToDos .todoContent {
+    text-decoration: line-through;
+    text-decoration-color: #333745;
+    text-decoration-thickness: 0.15rem;
+}
+
+.completedToDos:hover, .notCompletedToDos:hover {
+    background-color: #F3FDFA;
+    border-radius: 0.5rem;
+}
+
+.todoContent {
+    font-size: 1.25rem;
+}
+
+.delete, .todoStatus {
+    width: 1rem;
+}
+
+.delete a:hover, .todoStatus:hover {
+    font-size: 1.2rem;
+}
+
+.btnSave {
+    color: #000;
+    border: 0;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.2s;
+    font-size: 0;
+    height: fit-content;
+    margin: auto 0 auto 0;
+}
+
+.todoContent:focus+.btnSave {
+    font-size: 0.75rem;
+}
+
+.notFoundContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.notFound {
+    font-size: 6rem;
+    margin: 0;
+}
+
+.goHome {
+    font-size: 3rem;
+}
+
+.goHome:hover {
+    font-size: 6rem;
+}
