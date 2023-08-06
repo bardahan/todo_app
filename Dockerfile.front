@@ -1,0 +1,11 @@
+FROM python:3.9
+
+COPY reqeuirements.txt reqeuirements.txt
+RUN pip install -r reqeuirements.txt
+
+COPY web web
+COPY run_web.py run_web.py
+
+EXPOSE 8000
+
+CMD ["python", "run_web.py"]
