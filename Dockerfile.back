@@ -1,0 +1,11 @@
+FROM python:3.9
+
+COPY reqeuirements.txt reqeuirements.txt
+RUN pip install -r reqeuirements.txt
+
+COPY back back
+COPY run_back.py run_back.py
+
+EXPOSE 8001
+
+CMD ["python", "run_back.py"]
