@@ -1,7 +1,7 @@
 FROM python:3.9
 
-COPY reqeuirements.txt reqeuirements.txt
-RUN pip install -r reqeuirements.txt
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 COPY back back
 COPY run_back.py run_back.py
