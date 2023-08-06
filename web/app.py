@@ -1,11 +1,10 @@
 import socket
 import secrets
-from flask_cors import CORS
 import requests
 
 from flask import Flask, render_template
 
-from settings import API_BASE_URL
+from web.settings import API_BASE_URL
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(32)
