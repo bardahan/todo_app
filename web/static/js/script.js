@@ -1,7 +1,7 @@
 
 // Function to make API GET requests to the server on port 8001
 function makeApiGetRequest(url) {
-    return fetch(`http://localhost:8001${url}`)
+    return fetch(`${process.env.MY_VARIABLE}/${url}`)
         .then(response => {
             if (response.ok) {
                 return response.json();
