@@ -1,4 +1,3 @@
-
 // Function to make API GET requests to the server on port 8001
 function makeApiGetRequest(url) {
     return fetch(`${process.env.MY_VARIABLE}/${url}`)

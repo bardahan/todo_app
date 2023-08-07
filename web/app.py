@@ -14,7 +14,7 @@ app.secret_key = secrets.token_urlsafe(32)
 def index():
     res = requests.get(API_BASE_URL)
     todos = res.json()
-    return render_template("/index.html", todos=todos)
+    return render_template("/index.html", todos=todos, api_url=API_BASE_URL)
 
 
 @app.errorhandler(404)
