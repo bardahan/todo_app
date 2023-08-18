@@ -36,55 +36,51 @@ def currentTime():
 
 @app.route("/")
 def index():
-    cursor = connection.cursor()
-    cursor.execute("select * from todos")
-    todos = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("select * from todos")
+        todos = cursor.fetchall()
+
     return jsonify(todos)
 
 
 @app.route("/add/<todo>")
 def add(todo):
-    cursor = connection.cursor()
-    cursor.execute(
-        "insert into todos(todo,date,time) values(%s, %s, %s)",
-        (todo, currentDate(), currentTime()),
-    )
-    connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "insert into todos(todo,date,time) values(%s, %s, %s)",
+            (todo, currentDate(), currentTime()),
+        )
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/check/<int:id>")
 def check(id):
-    cursor = connection.cursor()
-    cursor.execute(f"update todos set status = 'True' where id = {id}")
-    cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
-    cursor.execute(f'update todos set "editTime" = %s where id = %s', (currentTime(), id))
-    connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(f"update todos set status = 'True' where id = {id}")
+        cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
+        cursor.execute(f'update todos set "editTime" = %s where id = %s', (currentTime(), id))
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/uncheck/<int:id>")
 def uncheck(id):
-    cursor = connection.cursor()
-    cursor.execute(f"update todos set status = 'False' where id = {id}")
-    connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(f"update todos set status = 'False' where id = {id}")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/edit/<int:id>/<todo>")
 def edit(id, todo):
-    cursor = connection.cursor()
-    cursor.execute(f"update todos set todo = '{todo}' where id = {id}")
-    connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(f"update todos set todo = '{todo}' where id = {id}")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    cursor = connection.cursor()
-    cursor.execute(f"delete from todos where id = {id}")
-    cursor.execute(f"select setval('todos_id_seq',(select max(id) from todos))")
-    connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(f"delete from todos where id = {id}")
+        cursor.execute(f"select setval('todos_id_seq',(select max(id) from todos))")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
