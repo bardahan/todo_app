@@ -77,8 +77,6 @@ def check(id):
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute(f"update todos set status = 'True' where id = {id}")
-            cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
-            cursor.execute(f'update todos set "editTime" = %s where id = %s', (currentTime(), id))
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
