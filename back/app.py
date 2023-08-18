@@ -35,6 +35,7 @@ def get_db_connection():
     try:
         yield connection
     finally:
+        connection.commit()
         connection.close()
 
 
