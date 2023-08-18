@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import socket
 import secrets
 
@@ -22,6 +23,21 @@ connection = psycopg2.connect(
 )
 
 
+@contextmanager
+def get_db_connection():
+    connection = psycopg2.connect(
+        database=settings.DB_SCHEME,
+        user=settings.DB_USER,
+        password=settings.DB_PASS,
+        host=settings.DB_HOST,
+        port="5432",
+    )    
+    try:
+        yield connection
+    finally:
+        connection.close()
+
+
 class SimpleResponse(object):
     OK_RESPONSE = dict(success=1)
 
@@ -36,51 +52,57 @@ def currentTime():
 
 @app.route("/")
 def index():
-    with connection.cursor() as cursor:
-        cursor.execute("select * from todos")
-        todos = cursor.fetchall()
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("select * from todos")
+            todos = cursor.fetchall()
 
     return jsonify(todos)
 
 
 @app.route("/add/<todo>")
 def add(todo):
-    with connection.cursor() as cursor:
-        cursor.execute(
-            "insert into todos(todo,date,time) values(%s, %s, %s)",
-            (todo, currentDate(), currentTime()),
-        )
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "insert into todos(todo,date,time) values(%s, %s, %s)",
+                (todo, currentDate(), currentTime()),
+            )
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/check/<int:id>")
 def check(id):
-    with connection.cursor() as cursor:
-        cursor.execute(f"update todos set status = 'True' where id = {id}")
-        cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
-        cursor.execute(f'update todos set "editTime" = %s where id = %s', (currentTime(), id))
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"update todos set status = 'True' where id = {id}")
+            cursor.execute('update todos set "editDate" = %s where id = %s', (currentDate(), id))
+            cursor.execute(f'update todos set "editTime" = %s where id = %s', (currentTime(), id))
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/uncheck/<int:id>")
 def uncheck(id):
-    with connection.cursor() as cursor:
-        cursor.execute(f"update todos set status = 'False' where id = {id}")
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"update todos set status = 'False' where id = {id}")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/edit/<int:id>/<todo>")
 def edit(id, todo):
-    with connection.cursor() as cursor:
-        cursor.execute(f"update todos set todo = '{todo}' where id = {id}")
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"update todos set todo = '{todo}' where id = {id}")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    with connection.cursor() as cursor:
-        cursor.execute(f"delete from todos where id = {id}")
-        cursor.execute(f"select setval('todos_id_seq',(select max(id) from todos))")
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"delete from todos where id = {id}")
+            cursor.execute(f"select setval('todos_id_seq',(select max(id) from todos))")
     return jsonify(SimpleResponse.OK_RESPONSE)
 
 
