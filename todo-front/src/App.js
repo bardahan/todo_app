@@ -9,6 +9,7 @@ function App() {
   const [reloadTodos, setReloadTodos] = useState(0);
 
   useEffect(() => {
+    console.log(apiUri)
     fetch(apiUri)
       .then(response => response.json())
       .then(data => {
