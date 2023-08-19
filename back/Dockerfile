@@ -6,8 +6,7 @@ RUN apt-get update && \
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY back back
-COPY run_back.py run_back.py
+COPY . .
 
 EXPOSE 8001
 

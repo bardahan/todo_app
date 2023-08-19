@@ -3,8 +3,7 @@ version: '3.3'
 services:
   web:
     build:
-      context: .
-      dockerfile: Dockerfile.web
+      context: todo-front
     ports:
       - "80:8000"
     environment:
@@ -12,8 +11,7 @@ services:
 
   back:
     build:
-      context: .
-      dockerfile: Dockerfile.back
+      context: back
     ports:
       - "8001:8001"
     environment:
