@@ -8,7 +8,7 @@ from flask_cors import CORS
 from datetime import datetime
 from flask import Flask, jsonify
 
-import back.settings as settings
+import settings as settings
 
 app = Flask(__name__)
 CORS(app)

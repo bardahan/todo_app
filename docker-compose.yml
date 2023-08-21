@@ -3,17 +3,16 @@ version: '3.3'
 services:
   web:
     build:
-      context: .
-      dockerfile: Dockerfile.web
+      context: todo-front
     ports:
       - "80:8000"
     environment:
-      - API_BASE_URL=$API_BASE_URL
+      - REACT_APP_API_BASE_URL=$API_BASE_URL
+    restart: always
 
   back:
     build:
-      context: .
-      dockerfile: Dockerfile.back
+      context: back
     ports:
       - "8001:8001"
     environment:
@@ -21,3 +20,4 @@ services:
       - DB_USER=$DB_USER
       - DB_PASS=$DB_PASS
       - DB_SCHEME=$DB_SCHEME
+    restart: always
